@@ -40,6 +40,10 @@ class User {
         const result = await db.query('SELECT * FROM users');
         return result.rows.map(row => new User(row.id, row.username, row.email, row.password));
     }
+
+    static async deleteById(id) {
+        await db.query('DELETE FROM users WHERE id = $1', [id]);
+    }
 }
 
 export default User;

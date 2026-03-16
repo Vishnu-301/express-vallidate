@@ -48,20 +48,20 @@ export const login = async (req, res) => {
 
 // controller for getting a user by id
 export const getUser = async (req, res) => {
-    const { id } = req.params;  
+    const { id } = req.params;
     try {
         const user = await user.findById(id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
+        } else {
+            res.status(200).json({
+                user
+            });
         }
-        res.status(200).json({ 
-            user: user.username,
-            email: user.email
-        });
-     }
-        catch(error){
-            res.status(500).json({ message: 'Server error', error: error.message });
-        }
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
 }
 
 // controller for getting all users

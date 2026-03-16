@@ -23,15 +23,17 @@ app.use(cors());
 // connect to routes
 app.use('/api', authroutes);
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    const test = await db.query('SELECT * FROM users');
+    console.log(test.rows);
     res.send('Welcome to the Express Form Validation API');
 });
 
 // error handlers
 app.use(handleErrors);
 
-// Database connection
-db.connect();
+// create users table if it doesn't exist
+db.query(createUsersTable);
 
 // listen for requests
 app.listen(port, () => {
