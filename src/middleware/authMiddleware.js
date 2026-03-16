@@ -1,5 +1,5 @@
 // middleware error handler
-const handleErrors = (err, res, next, req) => {
+const handleErrors = (err, req, res, next) => {
     console.error('error executing query', err.stack);
     res.status(500)
         .json({

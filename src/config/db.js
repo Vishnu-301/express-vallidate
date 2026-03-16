@@ -1,9 +1,8 @@
 import pg from 'pg';
 import dotenv from 'dotenv';
-
+const { Pool } = pg;
 dotenv.config();
 
-const { Pool } = pg;
 
 // conect to the database
 const db = new Pool({
