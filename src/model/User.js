@@ -35,6 +35,11 @@ class User {
         return result.rows.length > 0 ? new User(result.rows[0].id, result.rows[0].username, result.rows[0].email, result.rows[0].password) : null;
     }
 
+    // find all users function
+    static async findAll() {
+        const result = await db.query('SELECT * FROM users');
+        return result.rows.map(row => new User(row.id, row.username, row.email, row.password));
+    }
 }
 
 export default User;

@@ -3,13 +3,25 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const { Pool } = pg;
+
 // conect to the database
-const db = new pg.Pool({
-    name: process.env.DB_NAME,
+const db = new Pool({
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
     host: process.env.DB_HOST,
+    name: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
+});
+
+// on database connection
+db.on('connect', () => {
+    console.log('Connected to the database');
+});
+
+// check for database connection errors
+db.on('error', (err) => {
+    console.error('Database connection error', err.stack);
 });
 
 // export the database connection
