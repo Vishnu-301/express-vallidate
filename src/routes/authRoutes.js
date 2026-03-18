@@ -4,6 +4,7 @@ import {
     login,
     getUser,
     getAllUsers,
+    updateUser,
     deleteUser
 } from "../controller/authController.js";
 import express from 'express';
@@ -17,8 +18,9 @@ router.post('/register', register);
 router.post('/login', login);
 
 // other routes
-router.get('/users/:id', authmiddleware, getUser);
 router.get('/users', authmiddleware, getAllUsers);
+router.get('/users/:id', authmiddleware, getUser);
+router.put('/users/:id', authmiddleware, updateUser);
 router.delete('/users/:id', authmiddleware, deleteUser);
 
 export default router;

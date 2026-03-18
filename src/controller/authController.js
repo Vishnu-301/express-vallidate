@@ -48,15 +48,19 @@ export const login = async (req, res) => {
 
 // controller for getting a user by id
 export const getUser = async (req, res) => {
-    const { id } = req.params;
+    const userId = req.params['id'];
     try {
-        const user = await user.findById(id);
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        } else {
+        const user = await user.findById(userId);
+        if (user) {
             res.status(200).json({
-                user
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email
+                }
             });
+        } else {
+            res.status(404).json({ message: 'User not found' });
         }
     }
     catch (error) {
@@ -69,6 +73,33 @@ export const getAllUsers = async (req, res) => {
     try {
         const users = await user.findAll();
         res.status(200).json({ users });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
+
+// update user
+export const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { username, email, password } = req.body;
+    const user = await user.findById(id);
+    try {
+        if (user.id !== req.user.id) {
+            return res.status(404).json({ message: 'User not found' });
+        } else {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+            const newUser = await user.update(id, username, email, hashedPassword);
+            res.status(200)
+                .json({
+                    message: 'User updated successfully',
+                    newUser: {
+                        id: newUser.id,
+                        username: newUser.username,
+                        email: newUser.email
+                    }
+                });
+        }
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }

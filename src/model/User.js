@@ -21,6 +21,14 @@ class User {
         return new User(result.rows[0].id, result.rows[0].username, result.rows[0].email, result.rows[0].password);
     }
 
+    // update users function
+    static async update(id, username, email, password) {
+        const result = await db.query(
+            'UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *',
+            [username, email, password, id]
+        );
+    }
+
     // find user by email function
     static async findByEmail(email) {
         const result = await db.query('SELECT * FROM users WHERE email = $1', [email]); 

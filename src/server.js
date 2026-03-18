@@ -26,7 +26,7 @@ app.use('/api', authroutes);
 app.get('/', async (req, res) => {
     const test = await db.query('SELECT * FROM users');
     console.log(test.rows);
-    res.send('Welcome to the Express Form Validation API');
+    res.send('Welcome to the Express Form Validation API by vishnu');
 });
 
 // error handlers
