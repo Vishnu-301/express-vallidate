@@ -6,6 +6,7 @@ drafting my steps
 - controller to regoster and login user
 - create controller for other actions like view users
 - create routes and middle
+- add update and delete routes
 
 # mode of set up
 - download files and folder from git hub
